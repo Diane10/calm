@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Raleway", Arial, Helvetica, sans-serif
+  }
+
+  #progress {
+        /* font-size: 18px; */
+        color: #2f2f2f;
+      }
+
+      .progress-number {
+        padding: 2px;
+        border: 1px solid #fff;
+        /* background-color: green; */
+        /* height: 25px;
+        width: 25px; */
+        vertical-align: middle;
+        text-align: center;
+        /* border-radius: 50%; */
+        /* color: #fff; */
+        display: inline-block;
+      }
+</style>
+
+<body class="w3-container">
+  <form  action="/choices_stress" method="post">
+    <div class="w3-display-middle w3-card wrapper " style="width: 95%;" >
+      <div class="w3-padding-16" id="survey">
+        <h1 class='w3-center'>Survey Questions</h1>
+        <!-- <hr style="margin-bottom: 30px" /> -->
+        <p class="w3-container w3-center" id="question"></p>
+        <!--populating question through javascript in p element-->
+
+        <div class="w3-container w3-center buttons">
+          <!--Creating four button element for four options-->
+          <input name="identity" value="Stress" style="display: none;"></input>
+          <input id="choice_holder" name="choice" value="0" style="display: none;"> </input>
+          <div class="w3-padding-small" ><button class="w3-round w3-button w3-light-blue" style="width: 100%;" type="button" value="0" id="btn0"><span id="choice0"></span></button></div>
+
+          <!--populating the choices through javascript-->
+          <div class="w3-padding-small"><button class="w3-round w3-padding w3-button w3-light-blue" style="width: 100%" type="button" id="btn1"><span id="choice1"></span></button></div>
+          <div class="w3-padding-small"><button class="w3-round w3-button w3-light-blue" style="width: 100%" type="button" id="btn2"><span id="choice2"></span></button></div>
+          <div class="w3-padding-small"><button class="w3-round w3-button w3-light-blue" style="width: 100%" type="button" id="btn3"><span id="choice3"></span></button></div>
+          <!-- hide all the buttons and show this dv -->
+
+
+        </div>
+
+        <div class=" w3-container w3-midlle-display" id='all_submited' style="display:none;">
+
+          <p class="w3-center">Submit your survey</p>
+
+          <p class="w3-center"><button class="w3-round w3-center w3-button w3-light-blue" style="width: 60%" type="submit">SUBMIT</button><p>
+
+        </div>
+  </form>
+
+
+
+  <!-- <hr style="margin-top: 60px" /> -->
+  <footer>
+    <p class="w3-row w3-center w3-large" id="progress"></p>
+    <!--Creating currentQuestion(1) of (5)Total Question through javascript-->
+  </footer>
+  </div>
+  </div>
+
+  <script>
+
+    /*Object Constructor function for Question Object*/
+
+    var rlt = [];
+    var resultArray = [];
+
+    function Question(text, choices, answer) {
+      this.text = text;
+      this.choices = choices;
+      this.answer = answer;
+    }
+
+    Question.prototype.correctAnswer = function (choice) {
+      return choice === this.answer;
+    };
+    Question.prototype.selectedQuestion = function (choice) {
+      return choice === this.choices;
+    };
+    /* End of Object Constructor function for Question Object */
+
+    /* Object Constructor function for SurveyQuestion Object */
+
+    function SurveyQuestion(questions) {
+      this.score = 0;
+      this.pickedQuestions = [];
+      this.questions = questions;
+      this.questionIndex = 0;
+    }
+
+    SurveyQuestion.prototype.getQuestionIndex = function () {
+      return this.questions[this.questionIndex];
+    };
+
+    SurveyQuestion.prototype.isEnded = function () {
+      return this.questions.length === this.questionIndex;
+    };
+
+    SurveyQuestion.prototype.guess = function (answer) {
+      if (this.getQuestionIndex().correctAnswer(answer)) {
+        this.score++;
+      }
+      if (this.getQuestionIndex().selectedQuestion(answer)) {
+        this.pickedQuestions.push(answer);
+      }
+
+      this.questionIndex++;
+    };
+
+    SurveyQuestion.prototype.getSelectedQuestions = (answers) => {
+      return this.pickedQuestions.push(answers);
+    };
+
+
+
+    /* end Object Constructor function for SurveyQuestion Object */
+
+    /*questions is an array where each element of this array is an object*/
+    var questions = [
+      new Question(
+        "I couldn't seem to experience any positive feeling at all. ",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"],
+        "Clone Wars"
+      ),
+      new Question(
+        "I just couldn't seem to get going. ",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Kwibuka Confy "
+      ),
+      new Question(
+        " I felt that I had nothing to look forward to.",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Aftereffect"
+      ),
+      new Question(
+        "I felt sad and depressed",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"],
+        "3ds-max"
+      ),
+      new Question(
+        " I felt that I had lost interest in just about everything",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+      new Question(
+        "I felt I wasn't worth much as a person",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+      new Question(
+        "I felt that life wasn't worthwhile.",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"],
+        "Foundry nuke"
+      ),
+      new Question(
+        "I couldn't seem to get any enjoyment out of the things I did.",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+
+      new Question(
+        "I felt down-hearted and blue.",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+
+      new Question(
+        "I was unable to become enthusiastic about anything",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+
+      new Question(
+        "I felt I was pretty worthless",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+
+      new Question(
+        "I could see nothing in the future to be hopeful about",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+
+      new Question(
+        "I felt that life was meaningless",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+
+      new Question(
+        "I found it difficult to work up the initiative to do things.Score",
+        ["Did not apply to me all", " Applied to me to some degree or some of the time", "Applied to me to a considerable degree or a good part of the time", "Applied to, me very much or most of the time"]
+        // "Foundry nuke"
+      ),
+    ];
+
+    var survey = new SurveyQuestion(questions); // Initialization of survey Constructor object by passing questions array
+
+    /*This function will populate the questions and choices through HTML DOM object methods*/
+    function populate() {
+      if (survey.isEnded()) {
+
+
+
+        document.getElementById("btn0").style.display = "none";
+        document.getElementById("btn1").style.display = "none";
+        document.getElementById("btn2").style.display = "none";
+        document.getElementById("btn3").style.display = "none";
+        document.getElementById("question").style.display = "none";
+
+        document.getElementById("all_submited").style.display = "block";
+
+        // upload choices array
+
+
+        // showScores();
+        getAllUserSelectedQuestions();
+
+
+      } else {
+        //show question
+        var element = document.getElementById("question");
+        element.innerHTML = survey.getQuestionIndex().text;
+
+        //show choices
+        var choices = survey.getQuestionIndex().choices;
+        for (var i = 0; i < choices.length; i++) {
+          var element = document.getElementById("choice" + i);
+          element.innerHTML = choices[i];
+          guess("btn" + i, choices[i]);
+        }
+
+
+
+        showProgress();
+
+      }
+    }
+
+    populate(); //calling of populate function
+
+    //guess function  is use to accept user's answer and to check for its correctness
+    function guess(id, guess) {
+      var resultArray = [];
+      var button = document.getElementById(id);
+      button.onclick = function () {
+        survey.guess(guess);
+        populate();
+        // const arra
+
+        resultArray.push({ id, ...{ guess } });
+        console.log(resultArray);
+        switch (id) {
+          case 'btn0':
+            rlt.push(0);
+
+            break;
+          case 'btn1':
+            rlt.push(1);
+            break;
+          case 'btn2':
+
+            rlt.push(2);
+            break;
+
+          case 'btn3':
+            rlt.push(3);
+            break;
+
+
+
+          default:
+            break;
+        }
+
+        // if(rlt.length ==  14){
+        //     document.getElementById("btn0").type = "submit";
+        //     document.getElementById("btn1").type = "submit";
+        //     document.getElementById("btn2").type = "submit";
+        //     document.getElementById("btn3").type = "submit";
+        // }
+
+
+
+        if (rlt.length <= 14) {
+          document.getElementById("choice_holder").value = rlt;
+          console.log('value' + document.getElementById("choice_holder").value);
+
+        }
+
+        console.log(rlt);
+      };
+
+
+    }
+
+    // The function will show the progress of questions (nka. 1 of 5)
+    function showProgress() {
+      var currentQuestionNumber = survey.questionIndex + 1;
+      var element = document.getElementById("progress");
+      element.innerHTML =
+        '<div class="progress-number">' +
+        currentQuestionNumber +
+        "</div>" +
+        " of " +
+        '<div class="progress-number">' +
+        survey.questions.length +
+        "</div>";
+    }
+
+    // This function will show result at the end of the survey
+    function showScores() {
+      var thankYou = "<h1>Thank you!</h1> <button type='submit' >Submit</button>";
+      thankYou +=
+        "<h2 id='score' style='text-align:center;'>Thank you for answering all questions  ";
+      ("</h2>");
+
+      // thankYou += "<button type='submit' >Submit</button>";
+
+
+
+      var element = document.getElementById("survey");
+      element.innerHTML = thankYou;
+    }
+
+    // todo THIS FUNCTION WILL SHOW ALL QUESTION THAT HAVE BEEN SELECTED
+    function getAllUserSelectedQuestions() {
+      console.log(survey.questions);
+    }
+  </script>
+</body>
+
+</html>

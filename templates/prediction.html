@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<title>ClamSpace</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: "Raleway", Arial, Helvetica, sans-serif
+    }
+
+    .myLink {
+        display: none
+    }
+</style>
+
+<body class="w3-light-grey w3-padding-top-64"
+    style="background-image: url('/static/pred.jpg');background-blend-mode: soft-light; background-color: salmon">
+
+
+    <!-- Header -->
+    <div class="w3-container w3-content w3-round w3-round" style="max-width:1500px;">
+        <!-- <img class="w3-image" src="images/pred.jpg" alt="rsl img" width="1500" height="700"> -->
+        <div class="w3-display-middle" style="width:80%">
+            <div class="w3-bar w3-round-medium ">
+                <button class="w3-bar-item w3-button tablink w3-round" onclick="openLink(event, 'Flight');"><i
+                        class="fa fa-line-chart w3-margin-right"></i>Prediction</button>
+                <button class="w3-bar-item w3-button tablink w3-round" onclick="openLink(event, 'Hotel');"><i
+                        class="fa fa-heart-o w3-margin-right"></i>Get more support</button>
+
+                <!-- <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Car');"><i
+                        class="fa fa-car w3-margin-right"></i>Rental</button> -->
+            </div>
+
+            
+
+            <!-- Tabs -->
+            <div id="Flight" class="w3-container w3-card w3-white w3-round w3-padding-16 myLink">
+                <div class="w3-container  w3-white w3-margin-bottom">
+                    <h4 class="w3-text-grey w3-padding-16"><i
+                            class="fa fa-refresh fa-fw w3-margin-right w3-xlarge w3-text-teal"></i>This is what we found
+                    </h4>
+                    <div class="w3-container">
+                        <h5 class="w3-opacity"><b>You are likely to have <span
+                                    class="w3-tag w3-light-blue w3-round">{{results}}</span> {{identify}}</b></h5>
+                        <h6 class="w3-text-teal"><i class="fa fa-calendar fa-fw w3-margin-right"></i>at {{t}}</h6>
+                        <!-- <hr> -->
+                        <div class="w3-card w3-padding-small w3-round-large">
+                            <p>Level of Stress</p>
+
+                        <div class="w3-light-grey w3-round-xlarge w3-small">
+                            <div class="w3-container w3-center w3-round-xlarge {{color}}" style="width:{{level}}%">{{level}}%</div>
+                        </div>
+
+                        <br>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet. Praesentium magnam consectetur vel in deserunt aspernatur est
+                            reprehenderit sunt hic. Nulla tempora soluta ea et odio, unde doloremque repellendus iure,
+                            iste.</p>
+                        
+
+                    </div>
+                </div>
+                <p><button class="w3-button w3-white w3-round w3-card"><a href="{{ url_for('login') }}">Take another survey</a></button></p>
+            </div>
+
+            <div id="Hotel" class="w3-container w3-white w3-padding-16 myLink">
+                <h3>Here is how you can get more help</h3>
+                <p>Talk to psychologist.</p>
+                <p>Here is the right match due to your predictions.</p>
+                <p><button class="w3-button w3-white w3-round w3-card"><a href="{{ url_for('login') }}">Take another survey</a></button></p>
+            </div>
+
+            <!-- <div id="Car" class="w3-container w3-white w3-padding-16 myLink">
+                <h3>Best car rental in the world!</h3>
+                <p><span class="w3-tag w3-deep-orange">DISCOUNT!</span> Special offer if you book today: 25% off
+                    anywhere in the world with CarServiceRentalRUs</p>
+                <input class="w3-input w3-border" type="text" placeholder="Pick-up point">
+                <p><button class="w3-button w3-dark-grey">Search Availability</button></p>
+            </div> -->
+        </div>
+    </div>
+
+
+    <script>
+        // Tabs
+        function openLink(evt, linkName) {
+            var i, x, tablinks;
+            x = document.getElementsByClassName("myLink");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" w3-amber", "");
+            }
+            document.getElementById(linkName).style.display = "block";
+            evt.currentTarget.className += " w3-amber";
+        }
+
+        // Click on the first tablink on load
+        document.getElementsByClassName("tablink")[0].click();
+    </script>
+
+</body>
+
+</html>
